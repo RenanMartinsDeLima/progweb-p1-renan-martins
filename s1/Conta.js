@@ -1,9 +1,13 @@
 // s1/Conta.js — v2: encapsulamento
 export class Conta {
+  
   #saldo = 0; // campo privado: só o código DENTRO desta classe enxerga
   #titular;
 
   constructor(numero, titular) {
+    if (new.target === Conta) {
+      throw new Error('Conta é abstrata: crie ContaCorrente ou ContaPoupanca');
+    }
     this.numero = numero;
     this.titular = titular; // passa pelo setter abaixo
   }
@@ -41,4 +45,14 @@ export class Conta {
     return this.#saldo;
   }
   
+  // "método abstrato": cada tipo de conta TEM de dizer quanto cobra
+  tarifaMensal() {
+    throw new Error('tarifaMensal() precisa ser implementado na subclasse');
+  }
+
+  // sobrescrevendo um método que veio de Object.prototype
+  toString() {
+    return `${this.constructor.name} ${this.numero} · ${this.titular} · R$ ${this.saldo.toFixed(2)}`;
+  }
+
 }
