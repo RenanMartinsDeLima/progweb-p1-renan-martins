@@ -18,6 +18,8 @@ export const ingressoService = {
     if (!clienteModel.buscarPorId(clienteId))
       throw erro(422, 'Cliente não existe');
     // Regra 2: assento escolhido não pode estar ocupado
+    if (assento < 1 || assento > 50)
+      throw erro(400, `Assento ${assento} fora do intervalo [1~50]`);
     if (ingressoModel.assentoDisponivel(assento))
       throw erro(409, `Alguém já reservou o assento ${assento}`);
     return ingressoModel.inserir({ clienteId, assento });
