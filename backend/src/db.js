@@ -24,3 +24,21 @@ db.exec(`
     cliente_id INTEGER NOT NULL REFERENCES clientes(id)
   );
 `);
+
+// Dados de exemplo: só entram se o banco estiver vazio.
+// No Render grátis o arquivo some a cada reinício; assim a demo nunca abre vazia.
+const { total } = db.prepare('SELECT COUNT(*) AS total FROM clientes').get();
+if (total === 0) {
+  const r = db
+    .prepare('INSERT INTO clientes (nome, cpf, email) VALUES (?, ?, ?)')
+    .run('Ana Silva', '11122233344', 'ana@exemplo.com');
+  db.prepare(`INSERT INTO ingressos (status, assento, cliente_id)
+              VALUES (?, ?, ?)`)
+    .run(1, 10, r.lastInsertRowid);
+  const s = db
+    .prepare('INSERT INTO clientes (nome, cpf, email) VALUES (?, ?, ?)')
+    .run('Ze Maria', '55522233344');
+  db.prepare(`INSERT INTO ingressos (status, assento, cliente_id)
+              VALUES (?, ?, ?)`)
+    .run(1, 33, s.lastInsertRowid);
+}
