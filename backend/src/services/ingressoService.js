@@ -13,7 +13,7 @@ export const ingressoService = {
     return ingresso;
   },
 
-  criar({ clienteId, assento } = {}) {
+  criar({ status, assento, clienteId } = {}) {
     // Regra 1: cliente deve existir
     if (!clienteModel.buscarPorId(clienteId))
       throw erro(422, 'Cliente não existe');
@@ -22,7 +22,7 @@ export const ingressoService = {
       throw erro(400, `Assento ${assento} fora do intervalo [1~50]`);
     if (ingressoModel.assentoDisponivel(assento))
       throw erro(409, `Alguém já reservou o assento ${assento}`);
-    return ingressoModel.inserir({ clienteId, assento });
+    return ingressoModel.inserir({ status, assento, clienteId });
   },
 
   atualizar(id, dados = {}) {
