@@ -2,17 +2,24 @@ import { api } from '../api.js';
 
 // const TIPOS = ['corrente', 'poupanca'];
 
-function preparar({ /*tipo, saldo,*/assento, clienteId }) {
-  if (!clienteId) throw new Error('Selecione o cliente.');
+function preparar({ status, assento, clienteId }) {
+  const dados = {
+    assento: (assento ?? ''),
+    status: 1,
+    clienteId: (clienteId ?? ''),
+  };
+  if (!dados.clienteId) throw new Error('Selecione o cliente.');
   // if (!TIPOS.includes(tipo)) throw new Error('Tipo de conta inválido.');
   // if (saldo === '' || Number.isNaN(Number(saldo))) {
   //   throw new Error('Informe o saldo em números.');
   // }
-  if (assento === '' || Number.isNaN(Number(assento))) {
+  if (dados.assento === '' || Number.isNaN(Number(assento))) {
     throw new Error('Informe o assento em números.');
   }
+  // if (!dados.status) throw new Error('Informe o status em números.');
+  
   // Formulário só entrega string: convertemos antes de enviar
-  return { /*tipo, saldo: Number(saldo),*/ assento: Number(assento), clienteId: Number(clienteId) };
+  return dados;
 }
 
 export const ingressoService = {

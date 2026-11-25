@@ -42,7 +42,7 @@ function linha(ingresso, editandoId) {
   const tr = document.createElement('tr');
   if (ingresso.id === editandoId) tr.className = 'editando';
 
-  const dono = nomeDoCliente.get(ingresso.clienteId)
+  const dono = nomeDoCliente.get(String(ingresso.clienteId))
     ?? `cliente #${ingresso.clienteId} (removido)`; // conta órfã: assunto da S5
 
 //   const cadeira = ingresso.assento;
@@ -58,6 +58,7 @@ function linha(ingresso, editandoId) {
     celula(dono),
     // celula(NOME_TIPO[ingresso.tipo] ?? ingresso.tipo),
     celula(ingresso.assento),
+    celula(ingresso.status),
     acoes,
   );
   return tr;
@@ -66,7 +67,7 @@ function linha(ingresso, editandoId) {
 export const ingressoView = {
   // Preenche o <select> com os clientes que existem agora
   preencherClientes(clientes) {
-    nomeDoCliente = new Map(clientes.map((c) => [c.id, c.nome]));
+    nomeDoCliente = new Map(clientes.map((c) => [String(c.id), c.nome]));
     const escolhido = el.cliente.value;
 
     const opcoes = clientes.map((c) => new Option(`${c.nome} (#${c.id})`, c.id));
@@ -96,6 +97,7 @@ export const ingressoView = {
     el.form.clienteId.value = ingresso.clienteId;
     // el.form.tipo.value = ingresso.tipo;
     el.form.assento.value = ingresso.assento;
+    el.form.status.value = ingresso.status;
     el.form.assento.focus();
   },
 
