@@ -3,9 +3,9 @@
 O sistema cadastra clientes e ingressos para um cinema.
 Projeto 1 da disciplina Programação Web (UEPB, 2026.2).
 
-- **Aplicação:** https://SEU-FRONT.vercel.app
-- **API:** https://SEU-SERVICO.onrender.com
-- **Vídeo de apresentação:** (link)
+- **Aplicação:** https://progweb-p1-renan-martins-frontend.vercel.app
+- **API:** https://progweb-p1-renan-martins.onrender.com
+- **Vídeo de apresentação:** https://youtu.be/AgGnb9vEG8w
 
 > A API está no plano grátis do Render: o primeiro acesso pode levar cerca de
 > um minuto, e os dados voltam aos de exemplo a cada reinício do serviço.
